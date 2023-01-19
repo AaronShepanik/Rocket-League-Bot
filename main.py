@@ -37,20 +37,20 @@ class Bot(GoslingAgent):
             'away_from_our_net': (self.friend_goal.right_post, self.friend_goal.left_post)
         }
         hits = find_hits(self, targets)
-        if self.me.boost > 85:
+        if self.me.boost > 80:
             if len(hits['at_opponent_goal']) > 0:
                 self.set_intent(hits['at_opponent_goal'][0])
                 self.debug_text = 'hitting at opponent goal'
                 self.add_debug_line('shot', self.me.location,
                                     self.ball.location, [0, 0, 255])
                 return
-            if len(hits['away_from_our_net']) > 0:
-                self.set_intent(hits['away_from_our_net'][0])
-                print('away from our goal')
-                self.debug_text = 'hitting away from own goal'
-                self.add_debug_line('shot', self.me.location,
-                                    self.ball.location, [0, 0, 255])
-                return
+            # if len(hits['away_from_our_net']) > 0:
+            #     self.set_intent(hits['away_from_our_net'][0])
+            #     print('away from our goal')
+            #     self.debug_text = 'hitting away from own goal'
+            #     self.add_debug_line('shot', self.me.location,
+            #                         self.ball.location, [0, 0, 255])
+            #     return
 
             # self.set_intent(short_shot(self.foe_goal.location))
             # self.debug_text = 'shooting'
@@ -75,4 +75,5 @@ class Bot(GoslingAgent):
         #     print('away from our goal')
         #     return
 
-        # self.set_intent(drive(500))
+        else:
+            self.set_intent(atba())
