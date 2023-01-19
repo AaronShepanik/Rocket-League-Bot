@@ -145,7 +145,7 @@ class GoslingAgent(BaseAgent):
         me_to_goal = (self.me.location - self.foe_goal.location).magnitude()
         ball_to_goal = (self.ball.location -
                         self.foe_goal.location).magnitude()
-        if me_to_goal < ball_to_goal + 1000:
+        if me_to_goal < (ball_to_goal + 800) and me_to_goal > 200:
             return True
         return False
 

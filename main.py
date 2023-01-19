@@ -32,12 +32,31 @@ class Bot(GoslingAgent):
                                 self.friend_goal.location, [250, 0, 0])
             return
 
+        targets = {
+            'at_opponent_goal': (self.foe_goal.left_post, self.foe_goal.right_post),
+            'away_from_our_net': (self.friend_goal.right_post, self.friend_goal.left_post)
+        }
+        hits = find_hits(self, targets)
         if self.me.boost > 85:
-            self.set_intent(short_shot(self.foe_goal.location))
-            self.debug_text = 'shooting'
-            self.add_debug_line('shot', self.me.location,
-                                self.ball.location, [0, 0, 255])
-            return
+            if len(hits['at_opponent_goal']) > 0:
+                self.set_intent(hits['at_opponent_goal'][0])
+                self.debug_text = 'hitting at opponent goal'
+                self.add_debug_line('shot', self.me.location,
+                                    self.ball.location, [0, 0, 255])
+                return
+            if len(hits['away_from_our_net']) > 0:
+                self.set_intent(hits['away_from_our_net'][0])
+                print('away from our goal')
+                self.debug_text = 'hitting away from own goal'
+                self.add_debug_line('shot', self.me.location,
+                                    self.ball.location, [0, 0, 255])
+                return
+
+            # self.set_intent(short_shot(self.foe_goal.location))
+            # self.debug_text = 'shooting'
+            # self.add_debug_line('shot', self.me.location,
+            #                    self.ball.location, [0, 0, 255])
+            # return
 
         target_boost = self.get_closest_large_boost()
         if target_boost is not None:
@@ -47,12 +66,6 @@ class Bot(GoslingAgent):
                                 target_boost.location, [0, 255, 0])
             return
 
-        # targets = {
-        #     'at_opponent_goal': (self.foe_goal.left_post, self.foe_goal.right_post),
-        #     'away_from_our_net': (self.friend_goal.right_post, self.friend_goal.left_post)
-        # }
-
-        # hits = find_hits(self, targets)
         # if len(hits['at_opponent_goal']) > 0:
         #     self.set_intent(hits['at_opponent_goal'][0])
         #     print('at their goal')
