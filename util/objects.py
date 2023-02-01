@@ -6,6 +6,7 @@ from rlbot.agents.base_agent import BaseAgent, SimpleControllerState
 # This file holds all of the objects used in gosling utils
 # Includes custom vector and matrix objects
 
+
 class GoslingAgent(BaseAgent):
     # This is the main object of Gosling Utils. It holds/updates information about the game and runs routines
     # All utils rely on information being structured and accessed the same way as configured in this class
@@ -43,8 +44,7 @@ class GoslingAgent(BaseAgent):
         field_info = self.get_field_info()
         for i in range(field_info.num_boosts):
             boost = field_info.boost_pads[i]
-            self.boosts.append(boost_object(
-                i, boost.location, boost.is_full_boost))
+            self.boosts.append(boost_object(i, boost.location))
         self.refresh_player_lists(packet)
         self.ball.update(packet)
         self.ready = True
@@ -141,13 +141,26 @@ class GoslingAgent(BaseAgent):
                 closest_distance = distance
         return closest_boost
 
+    def get_closest_boost(self):
+        active_boosts = [boost for boost in self.boosts if boost.active]
+        closest_boost = None
+        # if len(active_boosts) > 0:
+        #     closest_boost = active_boosts[0]
+        closest_distance = 10000
+        for boost in active_boosts:
+            distance = (self.me.location - boost.location).magnitude()
+            if closest_boost is None or distance < closest_distance:
+                closest_boost = boost
+                closest_distance = distance
+        return closest_boost
+
     def is_in_front_of_ball(self):
         me_to_goal = (self.me.location - self.foe_goal.location).magnitude()
         ball_to_goal = (self.ball.location -
                         self.foe_goal.location).magnitude()
         me_to_own_goal = (self.me.location -
                           self.friend_goal.location).magnitude()
-        if me_to_goal < (ball_to_goal + 800) and me_to_own_goal > 200:
+        if me_to_goal < (ball_to_goal) and me_to_own_goal > 800:
             return True
         return False
 
@@ -172,6 +185,17 @@ class GoslingAgent(BaseAgent):
     def draw_debug_lines(self):
         for line in self.debug_lines:
             self.renderer.draw_line_3d(line.vec1, line.vec2, line.color)
+
+    # def try_to_shoot(self):
+    #     targets = {'at_opponent_goal': (
+    #         self.foe_goal.left_post, self.foe_goal.right_post)}
+    #     hits = find_hits(self, targets)
+    #     if len(hits['at_opponent_goal']) > 0:
+    #         self.set_intent(hits['at_opponent_goal'][0])
+    #         self.debug_text = 'hitting at opponent goal'
+    #         self.add_debug_line('shot', self.me.location,
+    #                             self.ball.location, [0, 0, 255])
+    #         return
 
     def run(self):
         # override this with your strategy code
@@ -251,11 +275,12 @@ class ball_object:
 
 
 class boost_object:
-    def __init__(self, index, location, large):
+    def __init__(self, index, location):
         self.index = index
         self.location = Vector3(location.x, location.y, location.z)
         self.active = True
-        self.large = large
+        # determine boost size by height (only works for standard maps)
+        self.large = self.location.z > 7
 
     def update(self, packet):
         self.active = packet.game_boosts[self.index].is_active
