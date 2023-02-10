@@ -141,6 +141,18 @@ class GoslingAgent(BaseAgent):
                 closest_distance = distance
         return closest_boost
 
+    def get_boost_while_going_home(self):
+        active_boosts = [boost for boost in self.boosts if boost.active and abs(
+            self.friend_goal.location.y - boost.location.y) - 500 < abs(self.friend_goal.location.y - self.me.location.y)]
+        closest_distance = 8000
+        closest_boost = None
+        for boost in active_boosts:
+            distance = (self.me.location - boost.location).magnitude()
+            if closest_boost is None or distance < closest_distance:
+                closest_boost = boost
+                closest_distance = distance
+        return closest_boost
+
     def get_closest_boost(self):
         active_boosts = [boost for boost in self.boosts if boost.active]
         closest_boost = None
@@ -161,6 +173,38 @@ class GoslingAgent(BaseAgent):
         me_to_own_goal = (self.me.location -
                           self.friend_goal.location).magnitude()
         if me_to_goal < (ball_to_goal) and me_to_own_goal > 800:
+            return True
+        return False
+
+    def me_offside(self):
+        own_goal_to_ball_vector = (self.ball.location -
+                                   self.friend_goal.location).normalize()
+        me_to_own_goal = (self.me.location - self.friend_goal.location)
+        my_distance = own_goal_to_ball_vector.dot(me_to_own_goal)
+        ball_distance = (self.ball.location -
+                         self.friend_goal.location).magnitude()
+        if my_distance > ball_distance - 200:
+            return True
+        return False
+
+    def me_close(self):
+        if (self.me.location - self.ball.location).magnitude() < 2500:
+            return True
+        return False
+
+    def foe_offside(self):
+        foe_goal_to_ball_vector = (self.ball.location -
+                                   self.foe_goal.location).normalize()
+        foe_to_own_goal = (self.foes[0].location - self.foe_goal.location)
+        foe_distance = foe_goal_to_ball_vector.dot(foe_to_own_goal)
+        ball_distance = (self.ball.location -
+                         self.foe_goal.location).magnitude()
+        if foe_distance > ball_distance - 200:
+            return True
+        return False
+
+    def foe_close(self):
+        if (self.foes[0].location - self.ball.location).magnitude() < 2000:
             return True
         return False
 
