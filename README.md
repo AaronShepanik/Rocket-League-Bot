@@ -2,8 +2,9 @@
  
 
 
-<h2>Description</h2>
-This is a Rocket League Robot based off of instruction from the Skillquest Rocket League Bot course. Some strategy modifications and updates are made occasionally, usually in the main.py file. I definitely recommend the course for someone like myself who has never done any "bot" programming before. It's taught at a very accessible level and would even be great for someone with little to no Python experience. Find out more about the RLBot course on [the website](https://skillquest.io) or through the [Discord Community](https://discord.gg/hqkKfMpPvX).<br />
+## Description
+
+This is a Rocket League Robot based off of instruction from the Skillquest Rocket League Bot course. Some strategy modifications and updates are made occasionally, usually in the main.py file. I definitely recommend the course for someone like myself who has never done any "bot" programming before. It's taught at a very accessible level and would even be great for someone with little to no Python experience. Find out more about the RLBot course on [the website]("https://skillquest.io") or through the [Discord Community](https://discord.gg/hqkKfMpPvX).<br />
 
 
 <h2>Languages and Software used Used</h2>
