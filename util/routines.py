@@ -419,7 +419,7 @@ class recovery():
             local_target = agent.me.local(agent.me.velocity.flatten())
 
         defaultPD(agent, local_target)
-        agent.controller.throttle = 01.0
+        agent.controller.throttle = 1.0
 
         if not agent.me.airborne:
             agent.clear_intent()

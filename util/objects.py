@@ -172,7 +172,7 @@ class GoslingAgent(BaseAgent):
                         self.foe_goal.location).magnitude()
         me_to_own_goal = (self.me.location -
                           self.friend_goal.location).magnitude()
-        if (me_to_goal < (ball_to_goal)) and (me_to_own_goal > 800):
+        if (me_to_goal < (ball_to_goal)) and (me_to_own_goal > 1000):
             return True
         return False
 
