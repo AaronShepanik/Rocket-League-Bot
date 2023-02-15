@@ -9,13 +9,13 @@ This is a Rocket League Robot based off of instruction from the Skillquest Rocke
 
 ## Languages and Software Used
 
-- ** Python **
-- ** RLBot **
+- **Python**
+- **RLBot**
 
 ## Techniques Used 
 
-- <b>Simple/Intermediate coding skills, basic logic, object creation/manipulation, functions. </b>
- </b>
+- **Simple/Intermediate coding skills, basic logic, object creation/manipulation, functions.**  
+
 
 ## Project walk-through or samples:
 
