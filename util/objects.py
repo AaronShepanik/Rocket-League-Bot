@@ -143,7 +143,7 @@ class GoslingAgent(BaseAgent):
 
     def get_boost_while_going_home(self):
         active_boosts = [boost for boost in self.boosts if boost.active and abs(
-            self.friend_goal.location.y - boost.location.y) - 500 < abs(self.friend_goal.location.y - self.me.location.y)]
+            self.friend_goal.location.y - boost.location.y) - 1000 < abs(self.friend_goal.location.y - self.me.location.y)]
         closest_distance = 8000
         closest_boost = None
         for boost in active_boosts:
@@ -172,7 +172,7 @@ class GoslingAgent(BaseAgent):
                         self.foe_goal.location).magnitude()
         me_to_own_goal = (self.me.location -
                           self.friend_goal.location).magnitude()
-        if me_to_goal < (ball_to_goal) and me_to_own_goal > 800:
+        if (me_to_goal < (ball_to_goal)) and (me_to_own_goal > 800):
             return True
         return False
 
@@ -204,7 +204,7 @@ class GoslingAgent(BaseAgent):
         return False
 
     def foe_close(self):
-        if (self.foes[0].location - self.ball.location).magnitude() < 2000:
+        if (self.foes[0].location - self.ball.location).magnitude() < 1000:
             return True
         return False
 

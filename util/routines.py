@@ -269,7 +269,7 @@ class goto_boost():
         if self.boost.active == False or agent.me.boost >= 99.0 or distance_remaining < 350:
             agent.clear_intent()
         elif agent.me.airborne:
-            agent.set_intent(recovery(self.target))
+            agent.set_intent(recovery(target=self.target))
         elif abs(angles[1]) < 0.05 and velocity > 600 and velocity < 2150 and (distance_remaining / velocity > 2.0 or (adjustment < 90 and car_to_target/velocity > 2.0)):
             agent.set_intent(flip(local_target))
 
@@ -419,7 +419,8 @@ class recovery():
             local_target = agent.me.local(agent.me.velocity.flatten())
 
         defaultPD(agent, local_target)
-        agent.controller.throttle = 1
+        agent.controller.throttle = 01.0
+
         if not agent.me.airborne:
             agent.clear_intent()
 
