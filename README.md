@@ -23,6 +23,6 @@ The bot is actually a better player than I am---which might say more about me th
 
 <p align="center">
 Result of a 5-minute match against Psyonix Pro <br/>
-<img src=".png"/>
+<img src="https://github.com/AaronShepanik/Rocket-League-Bot/blob/main/Aaron_vs_PsyonixPro_Result.png"/>
 <br />
 <br />
